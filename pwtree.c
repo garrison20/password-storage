@@ -17,7 +17,8 @@ PWTree_Ptr *initialize() {
             node->username = NULL;
             node->password = NULL;
             node->next = NULL;
-            pwtree->tree = node;
+            pwtree->head = node;
+            pwtree->tail = pwtree->head;
         } else {
             /* Delete whole tree since first empty node can't be made */
             free(node);
@@ -35,7 +36,7 @@ int insert(PWTree_Ptr *pwtree, char *title, char *username, char *password) {
     if (pwtree != NULL) {
         /* If tree is empty, insert first node */
         if (pwtree->empty) {
-            node = pwtree->tree;
+            node = pwtree->head;
 
             node->title = malloc((int) strlen(title) + 1);
             if (node->title != NULL)
@@ -56,18 +57,62 @@ int insert(PWTree_Ptr *pwtree, char *title, char *username, char *password) {
                 return 0;
 
             pwtree->empty = 0;
+            pwtree->tail = pwtree->head;
         } else {
             node = create_node(title, username, password);
-            temp = pwtree->tree;
-
-            while (temp->next != NULL) {
-                temp = temp->next;
-            }
-
-            temp->next = node;
+            pwtree->tail->next = node;
+            pwtree->tail = pwtree->tail->next;
         }
     }
 
+    return 1;
+}
+
+int read_data(PWTree_Ptr *pwtree) {
+    FILE *pwfile;
+    char title[50], username[50], password[50];
+
+    if (pwtree != NULL) {
+        pwfile = fopen("pstorage.txt", "r");
+        if (pwfile != NULL) {
+            while (fscanf(pwfile, " %s %s %s", title, username, password) != EOF) {
+                if (title == NULL || username == NULL || password == NULL)
+                    break;
+                insert(pwtree, title, username, password);
+            }
+
+            fclose(pwfile);
+        }
+
+        printf("%d\n", pwtree->empty);
+        
+    } else 
+        return 0;
+
+    return 1;
+}
+
+int store_data(PWTree_Ptr *pwtree) {
+    FILE *pwfile;
+    PWTree *node;
+
+    if (pwtree != NULL) {
+        node = pwtree->head;
+
+        pwfile = fopen("pstorage.txt", "w");
+
+        while (node != NULL) {
+            if (node->title == NULL || node->username == NULL || node->password == NULL)
+                break;
+                
+            fprintf(pwfile, "%s\n%s\n%s\n\n", node->title, node->username, node->password);
+            node = node->next;
+        }
+
+        fclose(pwfile);
+    } else
+        return 0;
+    
     return 1;
 }
 

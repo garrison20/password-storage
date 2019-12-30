@@ -9,12 +9,15 @@ typedef struct pwtree {
 } PWTree;
 
 typedef struct {
-    PWTree *tree;
+    PWTree *head;
+    PWTree *tail;
     int empty;
 } PWTree_Ptr;
 
 PWTree_Ptr *initialize();
 int insert(PWTree_Ptr *, char *, char *, char *);
+int read_data(PWTree_Ptr *);
+int store_data(PWTree_Ptr *);
 
 
 int find(PWTree *, char *);

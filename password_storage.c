@@ -13,11 +13,15 @@
 int main(int argc, char *argv[]) {
     PWTree_Ptr *pwtree = initialize();
 
-    insert(pwtree, "Test", "robbyd", "12345");
-    insert(pwtree, "Test2", "rgd", "678910");
-    insert(pwtree, "Test3", "rgdddd", "67891dddd0");
+    read_data(pwtree);
 
-    printf("%s\n", pwtree->tree->next->next->title);
+    if (argc > 1) {
+        if ((strcmp(argv[1], "-i") == 0) && (argc == 5)) {
+            insert(pwtree, argv[2], argv[3], argv[4]);
+        }
+    }
+
+    store_data(pwtree);
 
     return 0;
 }
