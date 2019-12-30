@@ -16,12 +16,12 @@ typedef struct {
 
 PWTree_Ptr *initialize();
 int insert(PWTree_Ptr *, char *, char *, char *);
+int delete(PWTree_Ptr *, char *);
 int read_data(PWTree_Ptr *);
 int store_data(PWTree_Ptr *);
+PWTree *find(PWTree *, char *);
+int change_title(PWTree_Ptr *, char *, char *);
+int change_username(PWTree_Ptr *, char *, char *);
+int change_password(PWTree_Ptr *, char *, char *);
 
-
-int find(PWTree *, char *);
-int delete_entry(PWTree *, char *);
-int change_username(PWTree *, char *);
-int change_password(PWTree *, char *);
 #endif
