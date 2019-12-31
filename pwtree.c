@@ -176,7 +176,8 @@ int store_data(PWTree_Ptr *pwtree) {
             if (node->title == NULL || node->username == NULL || node->password == NULL)
                 break;
                 
-            fprintf(pwfile, "%s\n%s\n%s\n\n", node->title, node->username, node->password);
+            fprintf(pwfile, "%s\n%s\n%s\n\n", node->title, 
+                node->username, node->password);
             node = node->next;
         }
 
@@ -187,7 +188,7 @@ int store_data(PWTree_Ptr *pwtree) {
     return 1;
 }
 
-/*******************************************************************/
+/*****************************Start********************************/
 
 /* All "change" functions follow the same patter for changing one of 
 the strings tied to a node. The node is found with the find function,
@@ -257,7 +258,50 @@ int change_password(PWTree_Ptr *pwtree, char *title, char *new_password) {
     return 1;
 }
 
-/*******************************************************************/
+/***************************End*************************************/
+
+/*****************************Start********************************/
+
+/* All "show" functions follow the same pattern. They first parse through 
+the linked list and search for a node with a title that matches the one 
+given. If there is a match, then that node's respective username/password
+is printed to the terminal. */
+
+int show_username(PWTree_Ptr *pwtree, char *title) {
+    PWTree *temp = NULL;
+
+    if (pwtree != NULL) {
+        temp = find(pwtree->head, title);
+        if (temp != NULL) {
+            printf("%s\n", temp->username);
+        } else {
+            printf("Username not found");
+            return 0;
+        }
+    } else 
+        return 0;
+
+    return 1;
+}
+
+int show_password(PWTree_Ptr *pwtree, char *title) {
+    PWTree *temp = NULL;
+
+    if (pwtree != NULL) {
+        temp = find(pwtree->head, title);
+        if (temp != NULL) {
+            printf("%s\n", temp->password);
+        } else {
+            printf("Password not found");
+            return 0;
+        }
+    } else 
+        return 0;
+
+    return 1;
+}
+
+/***************************End*************************************/
 
 /* Parses through a list and returns the node if it's title matches the
 one given. */

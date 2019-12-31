@@ -7,9 +7,11 @@
 name their username and password are for and the respective username and 
 password. Entries, meaning the given company title and its respective 
 username and password, can be deleted, new ones can be inserted, and 
-current ones can have any of the three data entries modified. All data
-exists in a file titled "pstorage.txt", which is handled in the other 
-file titled "pwtree.c". */
+current ones can have any of the three data entries modified. Usernames
+and passwords of an entry can be shown if the given title has a match 
+(this implies that there can be no repeats, a check which should be 
+added later). All data exists in a file titled "pstorage.txt", which is 
+handled in the other file titled "pwtree.c". */
 int main(int argc, char *argv[]) {
     PWTree_Ptr *pwtree = initialize();
 
@@ -18,10 +20,14 @@ int main(int argc, char *argv[]) {
     if (argc > 1) {
         if (argc == 3) {
             /* Delete entry */
-            if (strcmp(argv[1], "-d") == 0) {
-                /* delete a node with the same title as the one given */
+            if (strcmp(argv[1], "-d") == 0) 
                 delete(pwtree, argv[2]);
-            }
+            /* Print username to terminal */
+            else if (strcmp(argv[1], "-su") == 0)
+                show_username(pwtree, argv[2]);
+            /* Print password to terminal */
+            else if (strcmp(argv[1], "-sp") == 0)
+                show_password(pwtree, argv[2]);
         } else if (argc == 4) {
             /* Change title */
             if (strcmp(argv[1], "-ct") == 0) 

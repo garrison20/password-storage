@@ -23,5 +23,7 @@ PWTree *find(PWTree *, char *);
 int change_title(PWTree_Ptr *, char *, char *);
 int change_username(PWTree_Ptr *, char *, char *);
 int change_password(PWTree_Ptr *, char *, char *);
+int show_username(PWTree_Ptr *, char *);
+int show_password(PWTree_Ptr *, char *);
 
 #endif
