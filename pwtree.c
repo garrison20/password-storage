@@ -90,9 +90,6 @@ int delete(PWTree_Ptr *pwtree, char *title) {
 
         curr = pwtree->head;
 
-        printf("%s\n", curr->title);
-
-
         while ((curr != NULL) && (strcmp(curr->title, title) != 0)) {
             prev = curr;
             curr = curr->next;
@@ -124,12 +121,14 @@ int delete(PWTree_Ptr *pwtree, char *title) {
                     pwtree->tail = prev;
                 /* Delete node somewhere in the middle */
                 } else {
-                    printf("%s\n", curr->next->title);
                     prev->next = curr->next;
                     free(curr);
                 }
-            } else 
+            /* No match found. */
+            } else {
+                printf("Entry not found.\n");
                 return 0;
+            }
         } 
     } else 
         return 0;
@@ -208,8 +207,10 @@ int change_title(PWTree_Ptr *pwtree, char *title, char *new_title) {
                 strcpy(temp->title, new_title);
             } else 
                 return 0;
-        } else 
+        } else {
+            printf("Entry not found.\n");
             return 0;
+        }
     } else 
         return 0;
     
@@ -229,8 +230,10 @@ int change_username(PWTree_Ptr *pwtree, char *title, char *new_username) {
                 strcpy(temp->username, new_username);
             } else 
                 return 0;
-        } else 
+        } else {
+            printf("Entry not found.\n");
             return 0;
+        }
     } else 
         return 0;
     
@@ -250,8 +253,10 @@ int change_password(PWTree_Ptr *pwtree, char *title, char *new_password) {
                 strcpy(temp->password, new_password);
             } else 
                 return 0;
-        } else 
+        } else {
+            printf("Entry not found.\n");
             return 0;
+        }
     } else 
         return 0;
     
@@ -275,7 +280,7 @@ int show_username(PWTree_Ptr *pwtree, char *title) {
         if (temp != NULL) {
             printf("%s\n", temp->username);
         } else {
-            printf("Username not found");
+            printf("Username not found.\n");
             return 0;
         }
     } else 
@@ -292,7 +297,7 @@ int show_password(PWTree_Ptr *pwtree, char *title) {
         if (temp != NULL) {
             printf("%s\n", temp->password);
         } else {
-            printf("Password not found");
+            printf("Password not found.\n");
             return 0;
         }
     } else 
